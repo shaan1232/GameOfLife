@@ -1,8 +1,11 @@
 import java.util.*;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
 
 public class GameOfLife {
 
-    public static void run(int[][] board){
+    public static void runGame(int[][] board){
         int x = board[0].length; // size of x dim
         int y = board[1].length; // size of y dim
 
@@ -10,6 +13,17 @@ public class GameOfLife {
         int[][] nextBoard = new int[x][y];
         for(int i = 0; i < x; i++)
         boardSave[i] = board[i].clone();
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame("Game");
+                Map map = new Map(board);
+                frame.add(map);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            }
+        });
 
  
 
@@ -48,6 +62,7 @@ public class GameOfLife {
     private static int[][] deepCopy2DArray(int[][] board){
         return board;
     }
+
 
     // issue is we individually change each type. We should just map all changes
     // one by one then assign them altogether.
@@ -191,6 +206,8 @@ public class GameOfLife {
                         {0,0,0,0,0,1,1,1,0,0},
                         {0,1,0,0,0,0,1,1,0,0},
                         {0,0,0,0,0,0,0,0,0,0}};
-        run(board);
+        runGame(board);
+
+        
     }
 }
