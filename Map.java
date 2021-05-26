@@ -33,9 +33,12 @@ public class Map extends JPanel {
         // Randomize the terrain
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j < NUM_COLS; j++) {
-                int randomTerrainIndex = r.nextInt(TERRAIN.length);
-                Color randomColor = TERRAIN[randomTerrainIndex];
-                this.terrainGrid[i][j] = randomColor;
+                 Color boardColor = TERRAIN[0];
+                 if (board[i][j] == 0) boardColor = TERRAIN[1];
+                
+
+           //     Color randomColor = TERRAIN[randomTerrainIndex];
+                this.terrainGrid[i][j] = boardColor;
             }
         }
         int preferredWidth = NUM_COLS * PREFERRED_GRID_SIZE_PIXELS;
@@ -61,6 +64,21 @@ public class Map extends JPanel {
                 Color terrainColor = terrainGrid[i][j];
                 g.setColor(terrainColor);
                 g.fillRect(x, y, rectWidth, rectHeight);
+            }
+        }
+    }
+
+
+
+    public void updateBoard(int[][] board){
+        for (int i = 0; i < NUM_ROWS; i++) {
+            for (int j = 0; j < NUM_COLS; j++) {
+                 Color boardColor = TERRAIN[0];
+                 if (board[i][j] == 0) boardColor = TERRAIN[1];
+                
+
+           //     Color randomColor = TERRAIN[randomTerrainIndex];
+                this.terrainGrid[i][j] = boardColor;
             }
         }
     }

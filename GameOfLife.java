@@ -2,6 +2,7 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class GameOfLife {
 
@@ -14,16 +15,17 @@ public class GameOfLife {
         for(int i = 0; i < x; i++)
         boardSave[i] = board[i].clone();
 
+        /*
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame = new JFrame("Game");
-                Map map = new Map(board);
-                frame.add(map);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
+                JFrame frame1 = new JFrame("Game");
+                Map map1 = new Map(board);
+                frame1.add(map1);
+                frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame1.pack();
+                frame1.setVisible(true);
             }
-        });
+        });*/
 
  
 
@@ -31,14 +33,37 @@ public class GameOfLife {
         printBoard(board);
         boolean flag = true;
 
+        // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+        JFrame frame = new JFrame("Game1232");
+        Map map = new Map(board);
+        frame.add(map);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        // &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
         while (flag){
+            map.updateBoard(board);
+            frame.add(map);
+            /*
+            frame.pack();
+            frame.setVisible(false);
+            frame.setVisible(true);
+            */
+            frame.invalidate();
+            frame.validate();
+            frame.repaint();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.err.format("IOException: %s%n", e);
+            }
+
             for (int i = 0; i < x; i++){
                 for (int j = 0; j < y; j++){
                     nextBoard[i][j] = getCurrent(board, i, j);
-        //            System.out.println("current board");
-        //            printBoard(board);
-        //            System.out.println("board Save");
-          //          System.out.println("x");
                 }
                 
             }
@@ -48,7 +73,6 @@ public class GameOfLife {
                 }
             printBoard(boardSave);
             if ((isEqualArray(board,boardSave))){
-                System.out.println("OH NO!");
                 flag = false;
             }
             System.out.println("Saving new state");
@@ -57,6 +81,7 @@ public class GameOfLife {
 
 
         }
+        frame.dispose();
     }
 
     private static int[][] deepCopy2DArray(int[][] board){
@@ -197,13 +222,13 @@ public class GameOfLife {
 
     public static void main(String[] args) {
         int board[][] ={{0,1,1,0,0,0,0,0,0,0},
-                        {1,1,0,0,0,0,0,0,0,0},
+                        {1,1,0,0,0,0,0,1,0,0},
                         {0,0,1,0,0,0,1,0,0,0},
-                        {0,0,1,0,0,0,0,0,0,0},
+                        {0,0,1,0,0,0,0,0,1,0},
                         {0,0,0,0,0,0,0,0,0,0},
-                        {0,0,0,0,1,0,0,0,0,0},
+                        {0,0,0,0,1,0,0,0,1,0},
                         {0,1,1,1,0,0,0,1,0,0},
-                        {0,0,0,0,0,1,1,1,0,0},
+                        {0,0,0,0,0,1,1,1,0,1},
                         {0,1,0,0,0,0,1,1,0,0},
                         {0,0,0,0,0,0,0,0,0,0}};
         runGame(board);
