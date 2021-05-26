@@ -56,6 +56,9 @@ public class Map extends JPanel {
         int rectWidth = getWidth() / NUM_COLS;
         int rectHeight = getHeight() / NUM_ROWS;
 
+        int visDotWidth = rectWidth / 4;
+        int visDotHeight = rectWidth / 4;
+
         for (int i = 0; i < NUM_ROWS; i++) {
             for (int j = 0; j < NUM_COLS; j++) {
                 // Upper left corner of this terrain rect
@@ -64,6 +67,8 @@ public class Map extends JPanel {
                 Color terrainColor = terrainGrid[i][j];
                 g.setColor(terrainColor);
                 g.fillRect(x, y, rectWidth, rectHeight);
+                g.setColor(Color.BLACK);
+                g.fillRect(x+(rectWidth/2)-(visDotWidth),y+rectHeight/2-(visDotHeight),visDotWidth,visDotHeight);
             }
         }
     }
